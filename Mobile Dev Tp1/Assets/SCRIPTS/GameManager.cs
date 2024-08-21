@@ -8,6 +8,9 @@ using System.Runtime.Serialization;
 public class GameManager : MonoBehaviour {
     public static GameManager Instancia;
 
+    [SerializeField] private InputManager inputManager;
+    public string verticalInputName = "Vertical";
+
     public float TiempoDeJuego = 60;
 
     public enum EstadoJuego { Calibrando, Jugando, Finalizado }
@@ -68,11 +71,11 @@ public class GameManager : MonoBehaviour {
         switch (EstAct) {
             case EstadoJuego.Calibrando:
 
-                if (Input.GetKeyDown(KeyCode.W)) {
+                if (inputManager.IsUpPressed(verticalInputName + 1)) {
                     Player1.Seleccionado = true;
                 }
 
-                if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                if (inputManager.IsUpPressed(verticalInputName + 2)) {
                     Player2.Seleccionado = true;
                 }
 
