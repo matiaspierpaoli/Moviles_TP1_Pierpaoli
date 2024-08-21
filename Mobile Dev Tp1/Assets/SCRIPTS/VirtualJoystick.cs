@@ -10,11 +10,18 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
     [SerializeField] private RectTransform stick = null;
     [SerializeField] private Image background = null;
 
-    public string playerID = "";
+    public int playerID = -1;
     public float limit = 180f;
 
     public string horizontalInputName = "Horizontal";
     public string verticalInputName = "Vertical";
+
+    private void OnEnable()
+    {
+    #if UNITY_STANDALONE
+            gameObject.SetActive(false);  // Disable Virtual Joystick on PC
+    #endif
+    }
 
     private void OnDisable()
     {
@@ -24,15 +31,15 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
     private void SetHorizontal(float value)
     {
-        inputManager.SetAxis(horizontalInputName + playerID, value);
-    }
-    
-    private void SetVertical(float value)
-    {
-        inputManager.SetAxis(verticalInputName + playerID, value);
+        inputManager.SetAxis(horizontalInputName + playerID.ToString(), value);
     }
 
-    void IDragHandler.OnDrag(PointerEventData eventData)
+    private void SetVertical(float value)
+    {
+        inputManager.SetAxis(verticalInputName + playerID.ToString(), value);
+    }
+
+    public void OnDrag(PointerEventData eventData)
     {
         Vector2 pos = ConvertToLocal(eventData);
         if (pos.magnitude > limit)
@@ -46,7 +53,7 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
         SetVertical(y);
     }
 
-    void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
         background.color = Color.gray;
         stick.anchoredPosition = Vector2.zero;
@@ -62,12 +69,11 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
     private Vector2 ConvertToLocal(PointerEventData eventData)
     {
-        Vector2 newPos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-        transform as RectTransform,
-        eventData.position,
-        eventData.enterEventCamera,
-        out newPos);
+            transform as RectTransform,
+            eventData.position,
+            eventData.enterEventCamera,
+            out Vector2 newPos);
         return newPos;
     }
 }

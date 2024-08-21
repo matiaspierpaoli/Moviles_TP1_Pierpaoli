@@ -24,7 +24,7 @@ public class ControlDireccion : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		Giro = inputManager.GetAxis(inputName + playerId);
+		Giro = inputManager.GetAxis(inputName, playerId.ToString());
 
 		carController.SetGiro(Giro);
 	}

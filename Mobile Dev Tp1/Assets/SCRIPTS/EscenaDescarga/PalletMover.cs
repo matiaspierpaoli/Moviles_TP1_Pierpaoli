@@ -15,15 +15,15 @@ public class PalletMover : ManejoPallets {
 
     private void Update() {
 
-        if (!Tenencia() && Desde.Tenencia() && inputManager.GetAxis(horizontalInputName + playerID) > 0.75f) 
+        if (!Tenencia() && Desde.Tenencia() && inputManager.GetAxis(horizontalInputName, playerID.ToString()) > inputManager.GetMinAxisValue()) 
         {
             PrimerPaso();
         }
-        if (Tenencia() && inputManager.GetAxis(verticalInputName + playerID) < -0.75f) 
+        if (Tenencia() && inputManager.GetAxis(verticalInputName, playerID.ToString()) < inputManager.GetMinAxisValue()) 
         {
             SegundoPaso();
         }
-        if (segundoCompleto && inputManager.GetAxis(horizontalInputName + playerID) > 0.75f) 
+        if (segundoCompleto && inputManager.GetAxis(horizontalInputName, playerID.ToString()) > inputManager.GetMinAxisValue()) 
         {
             TercerPaso();
         }

@@ -71,11 +71,11 @@ public class GameManager : MonoBehaviour {
         switch (EstAct) {
             case EstadoJuego.Calibrando:
 
-                if (inputManager.IsUpPressed(verticalInputName + 1)) {
+                if (inputManager.IsUpPressed(verticalInputName, 1.ToString())) {
                     Player1.Seleccionado = true;
                 }
 
-                if (inputManager.IsUpPressed(verticalInputName + 2)) {
+                if (inputManager.IsUpPressed(verticalInputName, 2.ToString())) {
                     Player2.Seleccionado = true;
                 }
 
