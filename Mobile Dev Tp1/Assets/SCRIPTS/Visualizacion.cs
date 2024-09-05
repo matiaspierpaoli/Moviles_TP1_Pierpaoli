@@ -1,4 +1,5 @@
 using System;
+using System.Drawing.Printing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,9 +16,15 @@ public class Visualizacion : MonoBehaviour
 	ControlDireccion Direccion;
 	Player Pj;
 
+	public bool isPlayer1 = false;
+
+    public GameSettings gameSettings;
+
     public GameObject uiRoot;
     private EnableInPlayerState[] enableInPlayerStates;
-	
+
+	public GameObject playerUIGO;
+
 	//las distintas camaras
 	public Camera CamCalibracion;
 	public Camera CamConduccion;
@@ -51,7 +58,46 @@ public class Visualizacion : MonoBehaviour
     //------------------------------------------------------------------//
 
     void Awake() {
-        enableInPlayerStates = uiRoot.GetComponentsInChildren<EnableInPlayerState>(includeInactive:true);
+
+        enableInPlayerStates = uiRoot.GetComponentsInChildren<EnableInPlayerState>(includeInactive: true);
+
+        if (gameSettings.isSinglePlayerActive)
+        {
+            EnablePlayerStateComponents(true);
+
+            Rect currentRect = CamConduccion.rect;
+            currentRect.width = 1.0f; 
+            CamConduccion.rect = currentRect;
+
+            currentRect = CamCalibracion.rect;
+            currentRect.width = 1.0f;
+            CamCalibracion.rect = currentRect;
+
+            currentRect = CamDescarga.rect;
+            currentRect.width = 1.0f;
+            CamDescarga.rect = currentRect;
+
+			if (isPlayer1)
+			{
+				RectTransform rectTransform = playerUIGO.GetComponent<RectTransform>();
+				rectTransform.anchorMin = new Vector2(0.5f, 0f);
+				rectTransform.anchorMax = new Vector2(1f, 1f);
+
+				rectTransform.offsetMin = new Vector2(0.0f, rectTransform.offsetMin.y);
+			}
+        }
+        else
+        {
+            EnablePlayerStateComponents(isPlayer1);
+        }
+    }
+
+    private void EnablePlayerStateComponents(bool enable)
+    {
+        foreach (var component in enableInPlayerStates)
+        {
+            component.gameObject.SetActive(enable);
+        }
     }
 
     // Use this for initialization

@@ -36,22 +36,22 @@ public class CarCamera : MonoBehaviour
 		float speedFactor = Mathf.Clamp01(target.GetComponentInParent<Rigidbody>().velocity.magnitude / 70.0f);
 		GetComponent<Camera>().fieldOfView = Mathf.Lerp(55, 72, speedFactor);
 		float currentDistance = Mathf.Lerp(7.5f, 6.5f, speedFactor);
-		
+
 		currentVelocity = currentVelocity.normalized;
-		
+
 		Vector3 newTargetPosition = target.position + Vector3.up * height;
 		Vector3 newPosition = newTargetPosition - (currentVelocity * currentDistance);
 		newPosition.y = newTargetPosition.y;
-		
+
 		Vector3 targetDirection = newPosition - newTargetPosition;
-		if(Physics.Raycast(newTargetPosition, targetDirection, out hit, currentDistance, raycastLayers))
+		if (Physics.Raycast(newTargetPosition, targetDirection, out hit, currentDistance, raycastLayers))
 			newPosition = hit.point;
-		
+
 		newPosition += transform.forward * LejaniaZ;//diferencia en z agregada por mi
-		
+
 		transform.position = newPosition;
 		transform.LookAt(newTargetPosition);
-		
+
 		//rotacion agregada por mi
 		Vector3 vAux = transform.rotation.eulerAngles;
 		vAux.x = 20;

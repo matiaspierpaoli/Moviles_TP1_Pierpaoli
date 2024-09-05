@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Frenado : MonoBehaviour 
 {
+	public float decelerationRate = 3.0f;
 	public float VelEntrada = 0;
 	public string TagDeposito = "Deposito";
 
@@ -31,7 +32,11 @@ public class Frenado : MonoBehaviour
 			{
 				Contador++;
 			}
-		}
+
+            GetComponent<Rigidbody>().velocity = Vector3.Lerp(GetComponent<Rigidbody>().velocity, Vector3.zero, Time.deltaTime * decelerationRate);
+        }
+
+		Debug.Log(GetComponent<Rigidbody>().velocity);
 	}
 	
 	void OnTriggerEnter(Collider other) 

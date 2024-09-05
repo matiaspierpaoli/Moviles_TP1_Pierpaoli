@@ -9,7 +9,7 @@ public class CarController : MonoBehaviour {
     public float throttleCoefficient = 20000f;
     public float maxTurn = 20f;
     float giro = 0f;
-    float acel = 1f;
+    float acel = 0f;
 
 	
 	// Update is called once per frame

@@ -3,8 +3,6 @@ using System.Collections;
 
 public class EstanteLlegada : ManejoPallets
 {
-
-	public GameObject Mano;
 	public ContrCalibracion ContrCalib;
 	
 	public override bool Recibir(Pallet p)
