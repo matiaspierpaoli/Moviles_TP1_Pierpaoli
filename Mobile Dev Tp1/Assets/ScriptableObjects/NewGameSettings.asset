@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be365515ea1e576499117ee78e1bb4f1, type: 3}
   m_Name: NewGameSettings
   m_EditorClassIdentifier: 
-  isSinglePlayerActive: 1
+  isSinglePlayerActive: 0

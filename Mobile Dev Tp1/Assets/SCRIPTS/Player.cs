@@ -38,14 +38,14 @@ public class Player : MonoBehaviour
 	
 	//------------------------------------------------------------------//
 	
-	public bool AgregarBolsa(Bolsa b)
+	public bool AddBag(Bolsa b)
 	{
 		if(CantBolsAct + 1 <= Bolasas.Length)
 		{
 			Bolasas[CantBolsAct] = b;
 			CantBolsAct++;
 			Dinero += (int)b.Monto;
-			b.Desaparecer();
+			b.Disappear();
 			return true;
 		}
 		else

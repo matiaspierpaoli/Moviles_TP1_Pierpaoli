@@ -36,7 +36,7 @@ public class Frenado : MonoBehaviour
             GetComponent<Rigidbody>().velocity = Vector3.Lerp(GetComponent<Rigidbody>().velocity, Vector3.zero, Time.deltaTime * decelerationRate);
         }
 
-		Debug.Log(GetComponent<Rigidbody>().velocity);
+		//Debug.Log(GetComponent<Rigidbody>().velocity);
 	}
 	
 	void OnTriggerEnter(Collider other) 

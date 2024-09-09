@@ -342,4 +342,9 @@ public class GameManager : MonoBehaviour
         TiempoDeJuegoText.text = TiempoDeJuego.ToString("00");
         TiempoDeJuegoText.transform.parent.gameObject.SetActive(!ConteoRedresivo);
     }
+
+    public IGameState GetCurrentState()
+    {
+        return currentState;
+    }
 }

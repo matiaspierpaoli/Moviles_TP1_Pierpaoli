@@ -4,54 +4,57 @@ using System.Collections;
 public class Bolsa : MonoBehaviour
 {
 	public Pallet.Valores Monto;
-	//public int IdPlayer = 0;
 	public string TagPlayer = "";
 	public Texture2D ImagenInventario;
 	Player Pj = null;
 	
-	bool Desapareciendo;
-	public GameObject Particulas;
-	public float TiempParts = 2.5f;
+	public float maxSpawnTime = 12f;
+    public string spawnManagerTag = "SpawnManagerTag";
 
-	// Use this for initialization
+    private float spawnTimer = 0f;
+    private Transform spawnPoint;
+    private SpawnManager moneyBagSpawnManager;
+
 	void Start () 
 	{
 		Monto = Pallet.Valores.Valor2;
-	}
-	
-	// Update is called once per frame
-	void Update ()
+		moneyBagSpawnManager = GameObject.FindGameObjectWithTag(spawnManagerTag).GetComponent<SpawnManager>();
+    }
+
+    private void OnEnable()
+    {
+		spawnTimer = 0f;
+    }
+
+    void Update()
 	{
-		
-		if(Desapareciendo)
+		spawnTimer += Time.deltaTime;
+		if (spawnTimer >= maxSpawnTime)
 		{
-			TiempParts -= Time.deltaTime;
-			if(TiempParts <= 0)
-			{
-				GetComponent<Renderer>().enabled = true;
-				GetComponent<Collider>().enabled = true;
-			}
-		}
-		
+			Disappear();
+        }
 	}
-	
+
 	void OnTriggerEnter(Collider coll)
 	{
 		if(coll.tag == TagPlayer)
 		{
 			Pj = coll.GetComponent<Player>();
-			if(Pj.AgregarBolsa(this))
-				Desaparecer();
+			if(Pj.AddBag(this))
+				Disappear();
 		}
 	}
 	
-	public void Desaparecer()
+	public void Disappear()
 	{
-		Particulas.SetActive(true);
-		Desapareciendo = true;
-		
-		GetComponent<Renderer>().enabled = false;
-		GetComponent<Collider>().enabled = false;
-	
-	}
+        moneyBagSpawnManager.ReleaseSpawnPoint(spawnPoint);
+        spawnTimer = 0f;
+        ObjectPool.Instance.ReturnObjectToPool(this.gameObject, moneyBagSpawnManager.objectTag);
+    }
+
+    public void SetSpawnPoint(Transform point, SpawnManager manager)
+    {
+        spawnPoint = point;
+        moneyBagSpawnManager = manager;
+    }
 }
