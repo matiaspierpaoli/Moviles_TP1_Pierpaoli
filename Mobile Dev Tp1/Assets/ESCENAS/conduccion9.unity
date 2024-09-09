@@ -74275,9 +74275,9 @@ MonoBehaviour:
   - {fileID: 2800000, guid: f836f4a482f17844b801b9ceb13c1f8a, type: 3}
   - {fileID: 2800000, guid: b7e088a57ed74ae4ebb26597dfb96cd7, type: 3}
   Intervalo: 1.5
-  ImagenesDeCalib:
-  - {fileID: 2800000, guid: 7728fa8ba9181fe4ebdcb8509838f013, type: 3}
-  - {fileID: 2800000, guid: e7070f5025303a04f8753dd8acb5245e, type: 3}
+  isPlayer1: 1
+  PCCalibImage: {fileID: 2800000, guid: e7070f5025303a04f8753dd8acb5245e, type: 3}
+  MobileCalibImage: {fileID: 2800000, guid: 7728fa8ba9181fe4ebdcb8509838f013, type: 3}
   ImaReady: {fileID: 2800000, guid: cd96293139f94fb4b925e67c2069bc43, type: 3}
   ContrCalib: {fileID: 13045}
 --- !u!114 &12642
@@ -74297,9 +74297,9 @@ MonoBehaviour:
   - {fileID: 2800000, guid: f836f4a482f17844b801b9ceb13c1f8a, type: 3}
   - {fileID: 2800000, guid: b7e088a57ed74ae4ebb26597dfb96cd7, type: 3}
   Intervalo: 1.5
-  ImagenesDeCalib:
-  - {fileID: 2800000, guid: 7728fa8ba9181fe4ebdcb8509838f013, type: 3}
-  - {fileID: 2800000, guid: e7070f5025303a04f8753dd8acb5245e, type: 3}
+  isPlayer1: 0
+  PCCalibImage: {fileID: 2800000, guid: e7070f5025303a04f8753dd8acb5245e, type: 3}
+  MobileCalibImage: {fileID: 2800000, guid: 7728fa8ba9181fe4ebdcb8509838f013, type: 3}
   ImaReady: {fileID: 2800000, guid: cd96293139f94fb4b925e67c2069bc43, type: 3}
   ContrCalib: {fileID: 13048}
 --- !u!114 &12647 stripped

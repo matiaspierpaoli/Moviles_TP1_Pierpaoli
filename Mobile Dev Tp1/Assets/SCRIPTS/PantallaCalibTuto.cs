@@ -7,8 +7,11 @@ public class PantallaCalibTuto : MonoBehaviour
 	public float Intervalo = 1.2f;//tiempo de cada cuanto cambia de imagen
 	float TempoIntTuto = 0;
 	int EnCursoTuto = 0;
+
+	public bool isPlayer1 = false;
 	
-	public Texture2D[] ImagenesDeCalib;
+	public Texture2D PCCalibImage;
+	public Texture2D MobileCalibImage;
 	int EnCursoCalib = 0;
 	float TempoIntCalib = 0;
 	
@@ -22,19 +25,27 @@ public class PantallaCalibTuto : MonoBehaviour
 		switch(ContrCalib.EstAct)
 		{
 		case ContrCalibracion.Estados.Calibrando:
-			//pongase en posicion para iniciar
-			TempoIntCalib += T.GetDT();
-			if(TempoIntCalib >= Intervalo)
+			if (GameManager.Instancia.gameSettings.isSinglePlayerActive)
+            {
+                if (GameManager.Instancia.IsPlatformPC())
+                    GetComponent<Renderer>().material.mainTexture = PCCalibImage;
+                else
+                    GetComponent<Renderer>().material.mainTexture = MobileCalibImage;
+            }
+			else
 			{
-				TempoIntCalib = 0;
-				if(EnCursoCalib + 1 < ImagenesDeCalib.Length)
-					EnCursoCalib++;
-				else
-					EnCursoCalib = 0;
-			}
-			GetComponent<Renderer>().material.mainTexture = ImagenesDeCalib[EnCursoCalib];
-			
-			break;
+                if (GameManager.Instancia.IsPlatformPC())
+				{
+                    if (isPlayer1) 
+						GetComponent<Renderer>().material.mainTexture = PCCalibImage;
+					else
+                        GetComponent<Renderer>().material.mainTexture = MobileCalibImage;
+                }
+                else
+                    GetComponent<Renderer>().material.mainTexture = MobileCalibImage;
+            }
+
+            break;
 			
 		case ContrCalibracion.Estados.Tutorial:
 			//tome la bolsa y depositela en el estante

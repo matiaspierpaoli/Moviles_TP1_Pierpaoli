@@ -347,4 +347,13 @@ public class GameManager : MonoBehaviour
     {
         return currentState;
     }
+
+    public bool IsPlatformPC()
+    {
+    #if PLATFORM_ANDROID
+            return false;
+    #else
+        return true;
+    #endif
+    }
 }
