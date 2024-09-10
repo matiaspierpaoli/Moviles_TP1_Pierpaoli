@@ -77,6 +77,8 @@ public class PlayingState : IGameState
         gameManager.ActualizarUI();
     }
 
+    
+
     public void ExitState(GameManager gameManager)
     {
         // Limpiar o resetear lo necesario al salir del estado
@@ -118,6 +120,8 @@ public class GameManager : MonoBehaviour
     public float TiempoDeJuego = 60;
     public Text ConteoInicio;
     public Text TiempoDeJuegoText;
+
+    public float changeToPlayingStateDuration = 1f;
 
     public float ConteoParaInicion = 3;
     public bool ConteoRedresivo = true;
@@ -231,9 +235,6 @@ public class GameManager : MonoBehaviour
             ObjsCarrera[i].SetActive(true);
         }
 
-        Player1.FinCalibrado = true;
-        if (!gameSettings.isSinglePlayerActive) Player2.FinCalibrado = true;
-
         for (int i = 0; i < ObjsCalibracion1.Length; i++)
         {
             ObjsCalibracion1[i].SetActive(false);
@@ -309,19 +310,25 @@ public class GameManager : MonoBehaviour
     {
         if (playerId == 1)
         {
-            Player1.Seleccionado = true;
+            Player1.FinCalibrado = true;
         }
-        else if (playerId == 2 && !gameSettings.isSinglePlayerActive)
+        else if (playerId == 2 && gameSettings.isSinglePlayerActive)
         {
-            Player2.Seleccionado = true;
+            Player2.FinCalibrado = true;
         }
 
         // Si ambos jugadores han finalizado la calibración o si es un solo jugador,
         // se cambia al estado de juego.
-        if (Player1.Seleccionado && (gameSettings.isSinglePlayerActive || Player2.Seleccionado))
+        if (Player1.FinCalibrado && (gameSettings.isSinglePlayerActive || Player2.FinCalibrado))
         {
-            ChangeState(new PlayingState());
+            StartCoroutine(ChangeToPlayingState());   
         }
+    }
+
+    private IEnumerator ChangeToPlayingState()
+    {
+        yield return new WaitForSeconds(changeToPlayingStateDuration);
+        ChangeState(new PlayingState());
     }
 
     public void ActualizarUI()

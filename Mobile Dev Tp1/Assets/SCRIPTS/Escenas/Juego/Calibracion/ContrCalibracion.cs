@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class ContrCalibracion : MonoBehaviour
 {
@@ -61,6 +62,7 @@ public class ContrCalibracion : MonoBehaviour
 	{
 		EstAct = Estados.Finalizado;
         palletsMover.enabled = false;
+        Pj.FinCalibrado = true;
         GameManager.Instancia.FinCalibracion(Pj.IdPlayer);
 	}
 	

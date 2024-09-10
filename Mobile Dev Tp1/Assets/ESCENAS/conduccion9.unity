@@ -76012,6 +76012,7 @@ MonoBehaviour:
   TiempoDeJuego: 60
   ConteoInicio: {fileID: 11471493}
   TiempoDeJuegoText: {fileID: 1222576993}
+  changeToPlayingStateDuration: 1
   ConteoParaInicion: 3
   ConteoRedresivo: 1
   TiempEspMuestraPts: 1
