@@ -16,9 +16,11 @@ public class CarController : MonoBehaviour {
 	void FixedUpdate () {
         foreach (var wheel in throttleWheels) {
             wheel.motorTorque = throttleCoefficient * T.GetFDT() * acel;
+            Debug.Log("Motor Torque: " + wheel.motorTorque);
         }
         foreach (var wheel in steeringWheels) {
             wheel.steerAngle = maxTurn * giro;
+            Debug.Log("Steer Angle: " + wheel.steerAngle);
         }
         giro = 0f;
     }
