@@ -5,11 +5,6 @@ public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool Instance;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-
     [System.Serializable]
     public class Pool
     {
@@ -21,8 +16,10 @@ public class ObjectPool : MonoBehaviour
     public List<Pool> pools;
     private Dictionary<string, Queue<GameObject>> poolDictionary;
 
-    private void Start()
+    private void Awake()
     {
+        Instance = this;
+
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
         foreach (Pool pool in pools)
@@ -60,5 +57,34 @@ public class ObjectPool : MonoBehaviour
     {
         obj.SetActive(false);
         poolDictionary[tag].Enqueue(obj);
+    }
+
+    public Pool GetPoolByTag(string tag)
+    {
+        for (int i = 0;i < pools.Count;i++)
+        {
+            if (pools[i].tag == tag)
+                return pools[i];
+        }
+
+        return null;
+    }
+
+    public List<GameObject> GetAllObjectsFromPool(string tag)
+    {
+        if (!poolDictionary.ContainsKey(tag))
+        {
+            Debug.LogWarning("Pool with tag " + tag + " does not exist.");
+            return null;
+        }
+
+        List<GameObject> objectsList = new List<GameObject>();
+
+        foreach (GameObject obj in poolDictionary[tag])
+        {
+            objectsList.Add(obj);
+        }
+
+        return objectsList;
     }
 }

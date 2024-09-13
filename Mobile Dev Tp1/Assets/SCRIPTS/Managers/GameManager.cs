@@ -170,6 +170,8 @@ public class GameManager : MonoBehaviour
         }
 
         ChangeState(new CalibratingState());
+
+        InitializeTimer();
     }
 
     void Update()
@@ -192,6 +194,24 @@ public class GameManager : MonoBehaviour
         currentState?.ExitState(this);
         currentState = newState;
         currentState?.EnterState(this);
+    }
+
+    private void InitializeTimer()
+    {
+        switch (gameSettings.currentDifficulty)
+        {
+            case Difficulty.Easy:
+                TiempoDeJuego = gameSettings.easyGameTime;
+                break;
+            case Difficulty.Medium:
+                TiempoDeJuego = gameSettings.mediumGameTime;
+                break;
+            case Difficulty.Hard:
+                TiempoDeJuego = gameSettings.hardGameTime;
+                break;
+            default:
+                break;
+        }
     }
 
     private void TurnOffTwoPlayerObjects()
@@ -321,7 +341,7 @@ public class GameManager : MonoBehaviour
         // se cambia al estado de juego.
         if (Player1.FinCalibrado && (gameSettings.isSinglePlayerActive || Player2.FinCalibrado))
         {
-            StartCoroutine(ChangeToPlayingState());   
+            StartCoroutine(ChangeToPlayingState());
         }
     }
 

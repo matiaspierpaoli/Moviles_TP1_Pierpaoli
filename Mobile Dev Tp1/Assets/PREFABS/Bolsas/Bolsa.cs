@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Bolsa : MonoBehaviour
+public class Bolsa : MonoBehaviour, ISpawnable
 {
 	public Pallet.Valores Monto;
 	public string TagPlayer = "";
@@ -49,7 +49,7 @@ public class Bolsa : MonoBehaviour
 	{
         moneyBagSpawnManager.ReleaseSpawnPoint(spawnPoint);
         spawnTimer = 0f;
-        ObjectPool.Instance.ReturnObjectToPool(this.gameObject, moneyBagSpawnManager.objectTag);
+        ObjectPool.Instance.ReturnObjectToPool(this.gameObject, moneyBagSpawnManager.spawnSettings.objectTag);
     }
 
     public void SetSpawnPoint(Transform point, SpawnManager manager)

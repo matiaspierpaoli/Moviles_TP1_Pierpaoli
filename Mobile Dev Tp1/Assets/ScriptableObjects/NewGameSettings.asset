@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: NewGameSettings
   m_EditorClassIdentifier: 
   isSinglePlayerActive: 0
+  currentDifficulty: 0
+  easyGameTime: 60
+  mediumGameTime: 45
+  hardGameTime: 30
