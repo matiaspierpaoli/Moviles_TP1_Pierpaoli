@@ -1,192 +1,128 @@
 using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
-public class MngPts : MonoBehaviour 
+public class MngPts : MonoBehaviour
 {
-	Rect R = new Rect();
-	
-	public float TiempEmpAnims = 2.5f;
-	float Tempo = 0;
-	
-	public Vector2[] DineroPos;
-	public Vector2 DineroEsc;
-	public GUISkin GS_Dinero;
-	
-	public Vector2 GanadorPos;
-	public Vector2 GanadorEsc;
-	public Texture2D[] Ganadores;
-	public GUISkin GS_Ganador;
-	
-	public GameObject Fondo;
-	
-	public float TiempEspReiniciar = 10;
-	
-	
-	public float TiempParpadeo = 0.7f;
-	float TempoParpadeo = 0;
-	bool PrimerImaParp = true;
-	
-	public bool ActivadoAnims = false;
-	
-	Visualizacion Viz = new Visualizacion();
-	
-	//---------------------------------//
-	
-	// Use this for initialization
-	void Start () 
-	{		
-		SetGanador();
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		//PARA JUGAR
-		if(Input.GetKeyDown(KeyCode.Space) || 
-		   Input.GetKeyDown(KeyCode.Return) ||
-		   Input.GetKeyDown(KeyCode.Alpha0))
-		{
-			SceneManager.LoadScene(0);
-		}
-		
-		//CIERRA LA APLICACION
-		if(Input.GetKeyDown(KeyCode.Escape))
-		{
-			Application.Quit();
-		}		
-		
-		
-		TiempEspReiniciar -= Time.deltaTime;
-		if(TiempEspReiniciar <= 0 )
-		{
-			SceneManager.LoadScene(0);
-		}
-		
-		
-		
-		
-		if(ActivadoAnims)
-		{
-			TempoParpadeo += Time.deltaTime;
-			
-			if(TempoParpadeo >= TiempParpadeo)
-			{
-				TempoParpadeo = 0;
-				
-				if(PrimerImaParp)
-					PrimerImaParp = false;
-				else
-				{
-					TempoParpadeo += 0.1f;
-					PrimerImaParp = true;
-				}
-			}
-		}
-		
-		
-		
-		if(!ActivadoAnims)
-		{
-			Tempo += Time.deltaTime;
-			if(Tempo >= TiempEmpAnims)
-			{
-				Tempo = 0;
-				ActivadoAnims = true;
-			}
-		}
-		
-		
-	}
-	
-	void OnGUI()
-	{
-		if(ActivadoAnims)
-		{
-			SetDinero();
-			SetCartelGanador();
-		}
-		
-		GUI.skin = null;
-	}
-	
-	//---------------------------------//
-	
-	
-	void SetGanador()
-	{
-		switch(DatosPartida.LadoGanadaor)
-		{
-		case DatosPartida.Lados.Der:
-			
-			GS_Ganador.box.normal.background = Ganadores[1];
-			
-			break;
-			
-		case DatosPartida.Lados.Izq:
-			
-			GS_Ganador.box.normal.background = Ganadores[0];
-			
-			break;
-		}
-	}
-	
-	void SetDinero()
-	{
-		GUI.skin = GS_Dinero;
-		
-		R.width = DineroEsc.x * Screen.width/100;
-		R.height = DineroEsc.y * Screen.height/100;
-		
-		
-		
-		//IZQUIERDA
-		R.x = DineroPos[0].x * Screen.width/100;
-		R.y = DineroPos[0].y * Screen.height/100;
-		
-		if(DatosPartida.LadoGanadaor == DatosPartida.Lados.Izq)//izquierda
-		{
-			if(!PrimerImaParp)//para que parpadee
-				GUI.Box(R, "$" + Viz.PrepararNumeros(DatosPartida.PtsGanador));
-		}
-		else
-		{
-			GUI.Box(R, "$" + Viz.PrepararNumeros(DatosPartida.PtsPerdedor));
-		}
-		
-		
-		
-		//DERECHA
-		R.x = DineroPos[1].x * Screen.width/100;
-		R.y = DineroPos[1].y * Screen.height/100;
-		
-		if(DatosPartida.LadoGanadaor == DatosPartida.Lados.Der)//derecha
-		{
-			if(!PrimerImaParp)//para que parpadee
-				GUI.Box(R, "$" + Viz.PrepararNumeros(DatosPartida.PtsGanador));
-		}
-		else
-		{
-			GUI.Box(R, "$" + Viz.PrepararNumeros(DatosPartida.PtsPerdedor));
-		}
-		
-	}
-	
-	void SetCartelGanador()
-	{
-		GUI.skin = GS_Ganador;
-		
-		R.width = GanadorEsc.x * Screen.width/100;
-		R.height = GanadorEsc.y * Screen.height/100;
-		R.x = GanadorPos.x * Screen.width/100;
-		R.y = GanadorPos.y * Screen.height/100;
-		
-		GUI.Box(R, "");
-	}
-	
-	public void DesaparecerGUI()
-	{
-		ActivadoAnims = false;
-		Tempo = -100;
-	}
+    public GameSettings gameSettings;
+
+    public float TiempEmpAnims = 2.5f;
+    public float TiempEspReiniciar = 10f;
+    public float TiempParpadeo = 0.7f;
+
+    private float tempo = 0;
+    private float tempoParpadeo = 0;
+    private bool primerImaParp = true;
+    private bool activadoAnims = false;
+
+    public TextMeshProUGUI dineroIzqText;  
+    public TextMeshProUGUI dineroDerText;  
+    public Image ganadorImage;  
+
+    public Sprite ganadorIzqSprite;
+    public Sprite ganadorDerSprite;
+
+    private Visualizacion viz = new Visualizacion();
+
+    void Start()
+    {
+        SetGanador();
+
+        if (gameSettings.isSinglePlayerActive)
+        {
+            DisableTwoPlayerUI();
+        }
+
+    }
+
+    void Update()
+    {
+        // Reiniciar el juego
+        if (Input.GetKeyDown(KeyCode.Space) ||
+            Input.GetKeyDown(KeyCode.Return) ||
+            Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            SceneManager.LoadScene(0);
+        }
+
+        // Cerrar la aplicación
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+        TiempEspReiniciar -= Time.deltaTime;
+        if (TiempEspReiniciar <= 0)
+        {
+            SceneManager.LoadScene(0);
+        }
+
+        if (activadoAnims)
+        {
+            tempoParpadeo += Time.deltaTime;
+
+            if (tempoParpadeo >= TiempParpadeo)
+            {
+                tempoParpadeo = 0;
+                primerImaParp = !primerImaParp;
+            }
+        }
+
+        if (!activadoAnims)
+        {
+            tempo += Time.deltaTime;
+            if (tempo >= TiempEmpAnims)
+            {
+                tempo = 0;
+                activadoAnims = true;
+                SetDinero();
+            }
+        }
+    }
+
+    private void DisableTwoPlayerUI()
+    {
+        dineroDerText.gameObject.SetActive(false);
+    }
+
+    // Asigna la imagen del ganador
+    void SetGanador()
+    {
+        if (!gameSettings.isSinglePlayerActive)
+        {
+            if (gameSettings.player1Money > gameSettings.player2Money)
+                ganadorImage.sprite = ganadorIzqSprite;
+            else
+                ganadorImage.sprite = ganadorDerSprite;
+        }
+        else
+        {
+            ganadorImage.gameObject.SetActive(false);
+        }
+    }
+
+    // Actualiza el dinero en pantalla
+    void SetDinero()
+    {
+        if (!gameSettings.isSinglePlayerActive)
+        {
+            dineroIzqText.text = "$" + viz.PrepararNumeros(gameSettings.player1Money);
+            dineroDerText.text = "$" + viz.PrepararNumeros(gameSettings.player2Money);
+        }
+        else
+        {
+            dineroIzqText.text = "$" + viz.PrepararNumeros(gameSettings.player1Money);
+        }
+    }
+
+    // Opción para hacer desaparecer la UI si es necesario
+    public void DesaparecerUI()
+    {
+        activadoAnims = false;
+        tempo = -100;
+        dineroIzqText.text = "";
+        dineroDerText.text = "";
+        ganadorImage.enabled = false;
+    }
 }

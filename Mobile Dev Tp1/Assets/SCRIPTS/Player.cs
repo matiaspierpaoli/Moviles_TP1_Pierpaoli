@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour 
 {
+	public GameSettings gameSettings;
+	public bool isPlayer1;
+
 	public int Dinero = 0;
 	public int IdPlayer = 0;
 	
@@ -34,7 +37,15 @@ public class Player : MonoBehaviour
 			Bolasas[i] = null;
 		
 		MiVisualizacion = GetComponent<Visualizacion>();
-	}
+
+		Dinero = 0;
+
+        if (isPlayer1)
+			gameSettings.player1Money = Dinero;
+		else
+            gameSettings.player2Money = Dinero;
+
+    }
 	
 	//------------------------------------------------------------------//
 	
@@ -45,7 +56,13 @@ public class Player : MonoBehaviour
 			Bolasas[CantBolsAct] = b;
 			CantBolsAct++;
 			Dinero += (int)b.Monto;
-			b.Disappear();
+
+            if (isPlayer1)
+                gameSettings.player1Money = Dinero;
+            else
+                gameSettings.player2Money = Dinero;
+
+            b.Disappear();
 			return true;
 		}
 		else

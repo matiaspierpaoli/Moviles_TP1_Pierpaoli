@@ -3,11 +3,12 @@ using System.Collections;
 
 public class FadeInicioFinal : MonoBehaviour 
 {
+	[SerializeField] private MngPts Mng;
+
 	public float Duracion = 2;
 	public float Vel = 2;
 	float TiempInicial;
 	
-	MngPts Mng;
 	
 	Color aux;
 	
@@ -16,7 +17,6 @@ public class FadeInicioFinal : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		Mng = (MngPts)GameObject.FindObjectOfType(typeof (MngPts));
 		TiempInicial = Mng.TiempEspReiniciar;
 		
 		aux = GetComponent<Renderer>().material.color;
@@ -43,7 +43,7 @@ public class FadeInicioFinal : MonoBehaviour
 			if(!MngAvisado)
 			{
 				MngAvisado = true;
-				Mng.DesaparecerGUI();
+				Mng.DesaparecerUI();
 			}
 		}
 				

@@ -311,6 +311,11 @@ public class GameManager : MonoBehaviour
 
     public void FinalizarCarrera()
     {
+        if (currentState is GameOverState)
+        {
+            return;
+        }
+
         TiempoDeJuego = 0;
         ChangeState(new GameOverState());
 

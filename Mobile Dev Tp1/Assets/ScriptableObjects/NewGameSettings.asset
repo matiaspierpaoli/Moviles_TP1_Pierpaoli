@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be365515ea1e576499117ee78e1bb4f1, type: 3}
   m_Name: NewGameSettings
   m_EditorClassIdentifier: 
-  isSinglePlayerActive: 0
-  currentDifficulty: 0
+  isSinglePlayerActive: 1
+  currentDifficulty: 2
   easyGameTime: 60
   mediumGameTime: 45
   hardGameTime: 30
+  player1Money: 250000
+  player2Money: 0
+  LadoGanadaor: 0
