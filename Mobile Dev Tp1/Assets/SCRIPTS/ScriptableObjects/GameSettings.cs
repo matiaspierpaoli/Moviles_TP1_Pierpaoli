@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static DatosPartida;
 
 public enum Difficulty
 {
@@ -22,7 +19,5 @@ public class GameSettings : ScriptableObject
 
     public int player1Money;
     public int player2Money;
-
-    public Lados LadoGanadaor;
 
 }
