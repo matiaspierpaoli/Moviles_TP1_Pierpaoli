@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
-    [SerializeField] private InputManager inputManager;
     [SerializeField] private RectTransform stick = null;
     [SerializeField] private Image background = null;
 
@@ -31,12 +30,12 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
     private void SetHorizontal(float value)
     {
-        inputManager.SetAxis(horizontalInputName + playerID.ToString(), value);
+        InputManager.Instance.SetAxis(horizontalInputName + playerID.ToString(), value);
     }
 
     private void SetVertical(float value)
     {
-        inputManager.SetAxis(verticalInputName + playerID.ToString(), value);
+        InputManager.Instance.SetAxis(verticalInputName + playerID.ToString(), value);
     }
 
     public void OnDrag(PointerEventData eventData)

@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class ControlDireccion : MonoBehaviour 
 {
-	[SerializeField] private InputManager inputManager;
-
 	float Giro = 0;
 	
 	public bool Habilitado = true;
@@ -12,19 +10,23 @@ public class ControlDireccion : MonoBehaviour
 
 	public int playerId = -1;
     public string inputName = "Horizontal";
-		
-	//---------------------------------------------------------//
-	
-	// Use this for initialization
-	void Start () 
+
+    private string axisKey;
+
+    //---------------------------------------------------------//
+
+    // Use this for initialization
+    void Start () 
 	{
 		carController = GetComponent<CarController>();
-	}
+
+        axisKey = inputName + playerId.ToString();
+    }
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		Giro = inputManager.GetAxis(inputName, playerId.ToString());
+		Giro = InputManager.Instance.GetAxis(axisKey, "");
 
 		carController.SetGiro(Giro);
 	}

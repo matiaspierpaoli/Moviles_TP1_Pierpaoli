@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    public static InputManager Instance { get; private set; }
+
     Dictionary<string, float> axisValues = new Dictionary<string, float>();
 
     #if UNITY_ANDROID || UNITY_IOS
@@ -11,6 +13,19 @@ public class InputManager : MonoBehaviour
         const float MIN_AXIS_VALUE = 0.1f;
         const string PLATFORM_TYPE = "_PC";
     #endif
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public float GetAxis(string axis, string player)
     {
@@ -21,7 +36,7 @@ public class InputManager : MonoBehaviour
     #endif
     }
 
-#if UNITY_ANDROID || UNITY_IOS
+    #if UNITY_ANDROID || UNITY_IOS
     private float GetOrAddAxis(string axis)
     {
         if (!axisValues.ContainsKey(axis))

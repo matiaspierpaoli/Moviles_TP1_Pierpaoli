@@ -22,12 +22,12 @@ public class CalibratingState : IGameState
 
     public void UpdateState(GameManager gameManager)
     {
-        if (gameManager.inputManager.IsUpPressed(gameManager.verticalInputName, "1"))
+        if (InputManager.Instance.IsUpPressed(gameManager.verticalInputName, "1"))
         {
             gameManager.Player1.Seleccionado = true;
         }
 
-        if (!gameManager.gameSettings.isSinglePlayerActive && gameManager.inputManager.IsUpPressed(gameManager.verticalInputName, "2"))
+        if (!gameManager.gameSettings.isSinglePlayerActive && InputManager.Instance.IsUpPressed(gameManager.verticalInputName, "2"))
         {
             gameManager.Player2.Seleccionado = true;
         }
@@ -117,7 +117,6 @@ public class GameManager : MonoBehaviour
     public SceneLoader sceneLoader;
     public string ptsFinalSceneName = "PtsFinal";
 
-    public InputManager inputManager;
     public string verticalInputName = "Vertical";
     public float TiempoDeJuego = 60;
     public Text ConteoInicio;
