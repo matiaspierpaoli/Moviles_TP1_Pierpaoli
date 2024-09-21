@@ -17,6 +17,5 @@ MonoBehaviour:
   easyGameTime: 60
   mediumGameTime: 45
   hardGameTime: 30
-  player1Money: 250000
+  player1Money: 0
   player2Money: 0
-  LadoGanadaor: 0

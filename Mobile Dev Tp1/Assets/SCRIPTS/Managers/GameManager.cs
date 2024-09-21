@@ -98,7 +98,7 @@ public class GameOverState : IGameState
         gameManager.TiempEspMuestraPts -= Time.deltaTime;
         if (gameManager.TiempEspMuestraPts <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            gameManager.sceneLoader.LoadLevel(gameManager.ptsFinalSceneName);
         }
     }
 
@@ -114,6 +114,8 @@ public class GameManager : MonoBehaviour
     [Header("Config")]
     public static GameManager Instancia;
     public GameSettings gameSettings;
+    public SceneLoader sceneLoader;
+    public string ptsFinalSceneName = "PtsFinal";
 
     public InputManager inputManager;
     public string verticalInputName = "Vertical";

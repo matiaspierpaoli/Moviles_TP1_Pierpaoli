@@ -2,14 +2,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections;
 
 public class MngPts : MonoBehaviour
 {
     public GameSettings gameSettings;
+    public SceneLoader sceneLoader;
+    public string creditsSceneName = "Credits";
 
     public float TiempEmpAnims = 2.5f;
     public float TiempEspReiniciar = 10f;
     public float TiempParpadeo = 0.7f;
+
+    public float sceneDuration = 10f;
 
     private float tempo = 0;
     private float tempoParpadeo = 0;
@@ -34,6 +39,8 @@ public class MngPts : MonoBehaviour
             DisableTwoPlayerUI();
         }
 
+
+        StartCoroutine(StartSceneDuration());
     }
 
     void Update()
@@ -47,10 +54,10 @@ public class MngPts : MonoBehaviour
         }
 
         // Cerrar la aplicación
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    Application.Quit();
+        //}
 
         TiempEspReiniciar -= Time.deltaTime;
         if (TiempEspReiniciar <= 0)
@@ -79,6 +86,12 @@ public class MngPts : MonoBehaviour
                 SetDinero();
             }
         }
+    }
+
+    private IEnumerator StartSceneDuration()
+    {
+        yield return new WaitForSeconds(sceneDuration);
+        sceneLoader.LoadLevel(creditsSceneName);
     }
 
     private void DisableTwoPlayerUI()
