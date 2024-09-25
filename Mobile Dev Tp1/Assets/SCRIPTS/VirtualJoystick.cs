@@ -24,8 +24,11 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
     private void OnDisable()
     {
-        SetHorizontal(0);
-        SetVertical(0);
+        if (InputManager.Instance!= null)
+        {
+            SetHorizontal(0);
+            SetVertical(0);
+        }
     }
 
     private void SetHorizontal(float value)

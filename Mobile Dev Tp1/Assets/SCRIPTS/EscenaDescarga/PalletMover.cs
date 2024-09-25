@@ -1,60 +1,84 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PalletMover : ManejoPallets {
-
+﻿public class PalletMover : ManejoPallets
+{
     public int playerID = -1;
     public string horizontalInputName = "Horizontal";
     public string verticalInputName = "Vertical";
 
-
     public ManejoPallets Desde, Hasta;
-    bool segundoCompleto = false;
 
-    private void Update() {
+    private enum EstadoPallet { Ninguno, PrimerPaso, SegundoPaso, TercerPaso }
+    private EstadoPallet estadoActual = EstadoPallet.Ninguno;
 
-        if (!Tenencia() && Desde.Tenencia() && InputManager.Instance.GetAxis(horizontalInputName, playerID.ToString()) > InputManager.Instance.GetMinAxisValue())
-        { 
-            PrimerPaso();
-        }
-        if (Tenencia() && InputManager.Instance.GetAxis(verticalInputName, playerID.ToString()) < InputManager.Instance.GetMinAxisValue())
+    private void Update()
+    {
+        float horizontalInput = InputManager.Instance.GetAxis(horizontalInputName, playerID.ToString());
+        float verticalInput = InputManager.Instance.GetAxis(verticalInputName, playerID.ToString());
+
+        switch (estadoActual)
         {
-            SegundoPaso();
-        }
-        if (segundoCompleto && InputManager.Instance.GetAxis(horizontalInputName, playerID.ToString()) > InputManager.Instance.GetMinAxisValue())
-        {
-            TercerPaso();
+            case EstadoPallet.Ninguno:
+                if (!Tenencia() && Desde.Tenencia() && horizontalInput < -InputManager.Instance.GetMinAxisValue())
+                {
+                    PrimerPaso();
+                }
+                break;
+
+            case EstadoPallet.PrimerPaso:
+                if (Tenencia() && verticalInput > InputManager.Instance.GetMinAxisValue())
+                {
+                    SegundoPaso();
+                }
+                break;
+
+            case EstadoPallet.SegundoPaso:
+                if (horizontalInput > InputManager.Instance.GetMinAxisValue())
+                {
+                    TercerPaso();
+                }
+                break;
         }
     }
 
-    void PrimerPaso() {
+    void PrimerPaso()
+    {
         Desde.Dar(this);
-        segundoCompleto = false;
-    }
-    void SegundoPaso() {
-        base.Pallets[0].transform.position = transform.position;
-        segundoCompleto = true;
-    }
-    void TercerPaso() {
-        Dar(Hasta);
-        segundoCompleto = false;
+        estadoActual = EstadoPallet.PrimerPaso;
     }
 
-    public override void Dar(ManejoPallets receptor) {
-        if (Tenencia()) {
-            if (receptor.Recibir(Pallets[0])) {
+    void SegundoPaso()
+    {
+        base.Pallets[0].transform.position = transform.position;
+        estadoActual = EstadoPallet.SegundoPaso;
+    }
+
+    void TercerPaso()
+    {
+        Dar(Hasta);
+        estadoActual = EstadoPallet.Ninguno; 
+    }
+
+    public override void Dar(ManejoPallets receptor)
+    {
+        if (Tenencia())
+        {
+            if (receptor.Recibir(Pallets[0]))
+            {
                 Pallets.RemoveAt(0);
             }
         }
     }
-    public override bool Recibir(Pallet pallet) {
-        if (!Tenencia()) {
+
+    public override bool Recibir(Pallet pallet)
+    {
+        if (!Tenencia())
+        {
             pallet.Portador = this.gameObject;
             base.Recibir(pallet);
             return true;
         }
         else
+        {
             return false;
+        }
     }
 }
