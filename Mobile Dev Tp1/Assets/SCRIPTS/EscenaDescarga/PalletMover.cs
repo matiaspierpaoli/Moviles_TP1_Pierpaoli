@@ -12,26 +12,17 @@ public class PalletMover : ManejoPallets {
     public ManejoPallets Desde, Hasta;
     bool segundoCompleto = false;
 
-    private string horizontalAxisKey;
-    private string verticalAxisKey;
-
-    private void Start()
-    {
-        horizontalAxisKey = horizontalInputName + playerID.ToString();
-        verticalAxisKey = verticalInputName + playerID.ToString();
-    }
-
     private void Update() {
 
-        if (!Tenencia() && Desde.Tenencia() && InputManager.Instance.GetAxis(horizontalAxisKey, "") > InputManager.Instance.GetMinAxisValue()) 
-        {
+        if (!Tenencia() && Desde.Tenencia() && InputManager.Instance.GetAxis(horizontalInputName, playerID.ToString()) > InputManager.Instance.GetMinAxisValue())
+        { 
             PrimerPaso();
         }
-        if (Tenencia() && InputManager.Instance.GetAxis(verticalAxisKey, "") < InputManager.Instance.GetMinAxisValue()) 
+        if (Tenencia() && InputManager.Instance.GetAxis(verticalInputName, playerID.ToString()) < InputManager.Instance.GetMinAxisValue())
         {
             SegundoPaso();
         }
-        if (segundoCompleto && InputManager.Instance.GetAxis(horizontalAxisKey, "") > InputManager.Instance.GetMinAxisValue()) 
+        if (segundoCompleto && InputManager.Instance.GetAxis(horizontalInputName, playerID.ToString()) > InputManager.Instance.GetMinAxisValue())
         {
             TercerPaso();
         }

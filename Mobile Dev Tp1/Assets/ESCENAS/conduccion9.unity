@@ -74799,7 +74799,6 @@ MonoBehaviour:
   gameSettings: {fileID: 11400000, guid: 29d6ae00b9a0cb345ab2afc943ad0cb8, type: 2}
   sceneLoader: {fileID: 1409311212}
   ptsFinalSceneName: PtsFinal
-  inputManager: {fileID: 1017581388}
   verticalInputName: Vertical
   TiempoDeJuego: 60
   ConteoInicio: {fileID: 11471493}
@@ -80440,6 +80439,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5347541341094276323, guid: db6086bb6cb40af44868891788f049a9,
         type: 3}
+      propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5347541341094276323, guid: db6086bb6cb40af44868891788f049a9,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5347541341094276323, guid: db6086bb6cb40af44868891788f049a9,
+        type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
@@ -80451,7 +80460,7 @@ PrefabInstance:
     - target: {fileID: 5347541341094276323, guid: db6086bb6cb40af44868891788f049a9,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5347541341094276323, guid: db6086bb6cb40af44868891788f049a9,
         type: 3}
@@ -80461,12 +80470,12 @@ PrefabInstance:
     - target: {fileID: 5347541341094276323, guid: db6086bb6cb40af44868891788f049a9,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 5347541341094276323, guid: db6086bb6cb40af44868891788f049a9,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 146
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 5347541341094276323, guid: db6086bb6cb40af44868891788f049a9,
         type: 3}
@@ -80476,7 +80485,7 @@ PrefabInstance:
     - target: {fileID: 5347541341094276323, guid: db6086bb6cb40af44868891788f049a9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -95
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5347541341094276324, guid: db6086bb6cb40af44868891788f049a9,
         type: 3}
@@ -80838,7 +80847,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controlador: {fileID: 0}
-  inputManager: {fileID: 1017581388}
   playerID: 2
   horizontalInputName: Horizontal
   verticalInputName: Vertical
@@ -81095,7 +81103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339f7b0154f2ae9429284d49ca9a375d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 1017581388}
   stick: {fileID: 1047871668}
   background: {fileID: 658048421}
   playerID: 1
@@ -82345,7 +82352,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controlador: {fileID: 0}
-  inputManager: {fileID: 1017581388}
   playerID: 1
   horizontalInputName: Horizontal
   verticalInputName: Vertical
@@ -82960,7 +82966,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controlador: {fileID: 0}
-  inputManager: {fileID: 1017581388}
   playerID: 1
   horizontalInputName: Horizontal
   verticalInputName: Vertical
@@ -83412,7 +83417,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controlador: {fileID: 0}
-  inputManager: {fileID: 1017581388}
   playerID: 2
   horizontalInputName: Horizontal
   verticalInputName: Vertical
@@ -84538,7 +84542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339f7b0154f2ae9429284d49ca9a375d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 1017581388}
   stick: {fileID: 858408257}
   background: {fileID: 563151602}
   playerID: 2
@@ -85377,7 +85380,7 @@ PrefabInstance:
     - target: {fileID: 5347541341094276323, guid: db6086bb6cb40af44868891788f049a9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -95
+      value: -81
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -27,6 +27,12 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
+
     public float GetAxis(string axis, string player)
     {
     #if UNITY_ANDROID || UNITY_IOS
