@@ -53,6 +53,10 @@ public class CheakPoint : MonoBehaviour
                     player2Passed = true;
                 }
 			}
+			else
+			{
+                player1Passed = true;
+            }
 		}	
 	}
 	
@@ -79,6 +83,11 @@ public class CheakPoint : MonoBehaviour
 			return HabilitadoResp;
 		}
 	}
+
+    public bool PlayerPassed()
+    {
+        return player1Passed;
+    }
 
     public bool BothPlayersPassed()
     {

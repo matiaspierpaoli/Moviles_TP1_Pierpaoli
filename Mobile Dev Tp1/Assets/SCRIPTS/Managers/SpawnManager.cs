@@ -50,7 +50,10 @@ public class SpawnManager : MonoBehaviour
     private void Update()
     {
         if (spawnSettings.isMultiSpawneable)
+        {
+            UpdateLastCheckPoint();
             CheckObjectState();
+        }
     }
 
     private void InitializeDictionaries()
@@ -128,7 +131,7 @@ public class SpawnManager : MonoBehaviour
 
             if (spawnTimer <= 0f)
             {
-                UpdateLastCheckPoint();
+                
                 SpawnObject();
                 spawnTimer = spawnIntervalByDifficulty[gameSettings.currentDifficulty];
             }
@@ -139,9 +142,19 @@ public class SpawnManager : MonoBehaviour
     {
         for (int i = 0; i < checkPointsHolder.checkPoints.Count; i++)
         {
-            if (checkPointsHolder.checkPoints[i].BothPlayersPassed())
+            if (!gameSettings.isSinglePlayerActive)
             {
-                lastActiveCheckpoint = i;
+                if (checkPointsHolder.checkPoints[i].BothPlayersPassed())
+                {
+                    lastActiveCheckpoint = i;
+                }
+            }
+            else
+            {
+                if (checkPointsHolder.checkPoints[i].PlayerPassed())
+                {
+                    lastActiveCheckpoint = i;
+                }
             }
         }
     }
@@ -177,5 +190,10 @@ public class SpawnManager : MonoBehaviour
         {
             occupiedSpawnPoints.Remove(spawnPoint);
         }
+    }
+
+    public int GetLastActiveCheckpoint()
+    {
+        return lastActiveCheckpoint;
     }
 }

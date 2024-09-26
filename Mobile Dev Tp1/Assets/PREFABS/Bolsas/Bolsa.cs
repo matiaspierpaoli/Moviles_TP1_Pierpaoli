@@ -11,7 +11,6 @@ public class Bolsa : MonoBehaviour, ISpawnable
 	public float maxSpawnTime = 12f;
     public string spawnManagerTag = "SpawnManagerTag";
 
-    private float spawnTimer = 0f;
     private Transform spawnPoint;
     private SpawnManager moneyBagSpawnManager;
 
@@ -21,15 +20,9 @@ public class Bolsa : MonoBehaviour, ISpawnable
 		moneyBagSpawnManager = GameObject.FindGameObjectWithTag(spawnManagerTag).GetComponent<SpawnManager>();
     }
 
-    private void OnEnable()
-    {
-		spawnTimer = 0f;
-    }
-
     void Update()
 	{
-		spawnTimer += Time.deltaTime;
-		if (spawnTimer >= maxSpawnTime)
+		if (IsBehindLastCheckpoint())
 		{
 			Disappear();
         }
@@ -48,7 +41,6 @@ public class Bolsa : MonoBehaviour, ISpawnable
 	public void Disappear()
 	{
         moneyBagSpawnManager.ReleaseSpawnPoint(spawnPoint);
-        spawnTimer = 0f;
         ObjectPool.Instance.ReturnObjectToPool(this.gameObject, moneyBagSpawnManager.spawnSettings.objectTag);
     }
 
@@ -56,5 +48,19 @@ public class Bolsa : MonoBehaviour, ISpawnable
     {
         spawnPoint = point;
         moneyBagSpawnManager = manager;
+    }
+
+    private bool IsBehindLastCheckpoint()
+    {
+        int lastActiveCheckpoint = moneyBagSpawnManager.GetLastActiveCheckpoint();
+
+        if (lastActiveCheckpoint >= 0)
+        {
+			if (spawnPoint.position.z < moneyBagSpawnManager.checkPointsHolder.checkPoints[lastActiveCheckpoint].gameObject.transform.position.z)
+			{
+                return true;
+            }
+        }
+        return false;
     }
 }
