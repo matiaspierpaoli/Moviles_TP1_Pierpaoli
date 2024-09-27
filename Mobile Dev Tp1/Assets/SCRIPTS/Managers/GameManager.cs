@@ -318,7 +318,7 @@ public class GameManager : MonoBehaviour
         }
 
         TiempoDeJuego = 0;
-        ChangeState(new GameOverState());
+        //ChangeState(new GameOverState());
 
         // Lógica para determinar el ganador y los puntajes
 
